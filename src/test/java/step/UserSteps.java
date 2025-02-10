@@ -1,6 +1,9 @@
+package step;
+
 import api.UserApi;
 import data.BaseResponse;
 import data.user.CreateUserRequest;
+import data.user.UpdateUserRequest;
 import io.qameta.allure.Step;
 
 import static org.junit.Assert.assertEquals;
@@ -32,5 +35,20 @@ public class UserSteps {
         BaseResponse actual = userApi.create(createUserRequest);
         assertEquals(expected.getSuccess(), actual.getSuccess());
         assertEquals(expected.getMessage(), actual.getMessage());
+    }
+
+    @Step
+    public void updateUser_unauthorized(UpdateUserRequest updateUserRequest) {
+        BaseResponse expected = new BaseResponse(false, "You should be authorised");
+        BaseResponse actual = userApi.update(updateUserRequest);
+        assertEquals(expected.getSuccess(), actual.getSuccess());
+        assertEquals(expected.getMessage(), actual.getMessage());
+    }
+
+    @Step
+    public void updateUser_authorized(UpdateUserRequest updateUserRequest, String token) {
+        BaseResponse expected = new BaseResponse(true);
+        BaseResponse actual = userApi.update(updateUserRequest, token);
+        assertEquals(expected.getSuccess(), actual.getSuccess());
     }
 }

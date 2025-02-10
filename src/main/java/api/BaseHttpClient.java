@@ -49,9 +49,27 @@ public class BaseHttpClient {
                 .thenReturn();
     }
 
-    protected Response doDeleteRequest(String path) {
+    protected Response doPatchRequest(String path, Object body) {
         return given()
                 .spec(baseRequestSpec())
+                .body(body)
+                .patch(path)
+                .thenReturn();
+    }
+
+    protected Response doPatchRequest(String path, Object body, String token) {
+        return given()
+                .spec(baseRequestSpec())
+                .header("Authorization", token)
+                .body(body)
+                .patch(path)
+                .thenReturn();
+    }
+
+    protected Response doDeleteRequest(String path, Object token) {
+        return given()
+                .spec(baseRequestSpec())
+                .header("Authorization", token)
                 .delete(path)
                 .thenReturn();
     }

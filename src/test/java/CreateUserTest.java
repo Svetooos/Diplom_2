@@ -2,6 +2,7 @@ import data.user.CreateUserRequest;
 import io.qameta.allure.junit4.DisplayName;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
+import step.UserSteps;
 
 public class CreateUserTest {
     private UserSteps userSteps = new UserSteps();

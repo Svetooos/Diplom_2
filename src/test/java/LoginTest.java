@@ -3,6 +3,8 @@ import data.user.CreateUserRequest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import step.LoginSteps;
+import step.UserSteps;
 
 public class LoginTest {
     private LoginSteps loginSteps = new LoginSteps();
@@ -32,6 +34,6 @@ public class LoginTest {
         LoginRequest loginRequest = new LoginRequest(
                 createUserRequest.getEmail(),
                 createUserRequest.getPassword() + "1");
-        loginSteps.login_unsuccess(loginRequest);
+        loginSteps.login_unsuccessful(loginRequest);
     }
 }
