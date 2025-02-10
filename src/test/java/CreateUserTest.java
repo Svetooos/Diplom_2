@@ -1,11 +1,11 @@
-import data.user.User;
+import data.user.CreateUserRequest;
 import io.qameta.allure.junit4.DisplayName;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 
-public class CreateUser {
+public class CreateUserTest {
     private UserSteps userSteps = new UserSteps();
-    private User user = new User(
+    private CreateUserRequest createUserRequest = new CreateUserRequest(
             RandomStringUtils.randomAlphabetic(10) + "@yandex.ru",
             RandomStringUtils.randomAlphabetic(8),
             RandomStringUtils.randomAlphabetic(8));
@@ -13,18 +13,18 @@ public class CreateUser {
     @Test
     @DisplayName("Успешное создание пользователя")
     public void createCourier_success() {
-        userSteps.createUser_success(user);
+        userSteps.createUser_success(createUserRequest);
     }
 
     @Test
     @DisplayName("Дубликат создания пользователя")
     public void createUser_duplicate() {
-        userSteps.createUser_duplicate(user);
+        userSteps.createUser_duplicate(createUserRequest);
     }
 
     @Test
     @DisplayName("Дубликат создания пользователя")
     public void createUser_missData() {
-        userSteps.createUser_missData(user);
+        userSteps.createUser_missData(createUserRequest);
     }
 }

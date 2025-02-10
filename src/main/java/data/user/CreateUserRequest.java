@@ -1,14 +1,14 @@
 package data.user;
 
-public class User {
+public class CreateUserRequest {
     private String email;
     private String password;
     private String name;
 
-    public User() {
+    public CreateUserRequest() {
     }
 
-    public User(String email, String password, String name) {
+    public CreateUserRequest(String email, String password, String name) {
         this.email = email;
         this.password = password;
         this.name = name;
