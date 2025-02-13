@@ -21,6 +21,7 @@ public class OrderSteps {
     public void createOrder_unauthorized(CreateOrderRequest createOrderRequest) {
         BaseResponse expected = new BaseResponse(true);
         CreateOrderResponse actual = orderApi.create(createOrderRequest);
+        assertEquals(200, actual.getCode());
         assertEquals(expected.getSuccess(), actual.getSuccess());
         assertNotNull(actual.getName());
         assertNotNull(actual.getOrder());
@@ -31,6 +32,7 @@ public class OrderSteps {
     public void createOrder_authorized(CreateOrderRequest createOrderRequest, String token) {
         BaseResponse expected = new BaseResponse(true);
         CreateOrderResponse actual = orderApi.create(createOrderRequest, token);
+        assertEquals(200, actual.getCode());
         assertEquals(expected.getSuccess(), actual.getSuccess());
         assertNotNull(actual.getName());
         assertNotNull(actual.getOrder());
@@ -41,6 +43,7 @@ public class OrderSteps {
     public void createOrder_withIngredients(CreateOrderRequest createOrderRequest) {
         BaseResponse expected = new BaseResponse(true);
         CreateOrderResponse actual = orderApi.create(createOrderRequest);
+        assertEquals(200, actual.getCode());
         assertEquals(expected.getSuccess(), actual.getSuccess());
         assertNotNull(actual.getName());
         assertNotNull(actual.getOrder());
@@ -51,6 +54,7 @@ public class OrderSteps {
     public void createOrder_incorrectIngredient(CreateOrderRequest createOrderRequest) {
         BaseResponse expected = new BaseResponse(false, "One or more ids provided are incorrect");
         CreateOrderResponse actual = orderApi.create(createOrderRequest);
+        assertEquals(400, actual.getCode());
         assertEquals(expected.getSuccess(), actual.getSuccess());
         assertEquals(expected.getMessage(), actual.getMessage());
     }
@@ -59,6 +63,7 @@ public class OrderSteps {
     public void createOrder_withoutIngredients(CreateOrderRequest createOrderRequest) {
         BaseResponse expected = new BaseResponse(false, "Ingredient ids must be provided");
         CreateOrderResponse actual = orderApi.create(createOrderRequest);
+        assertEquals(400, actual.getCode());
         assertEquals(expected.getSuccess(), actual.getSuccess());
         assertEquals(expected.getMessage(), actual.getMessage());
     }
@@ -75,6 +80,7 @@ public class OrderSteps {
     public void getOrder_unauthorized() {
         BaseResponse expected = new BaseResponse(false, "You should be authorised");
         GetOrderResponse actual = orderApi.get();
+        assertEquals(401, actual.getCode());
         assertEquals(expected.getSuccess(), actual.getSuccess());
         assertEquals(expected.getMessage(), actual.getMessage());
     }
@@ -83,6 +89,7 @@ public class OrderSteps {
     public void getOrder_authorized(String token) {
         BaseResponse expected = new BaseResponse(true);
         GetOrderResponse actual = orderApi.get(token);
+        assertEquals(200, actual.getCode());
         assertEquals(expected.getSuccess(), actual.getSuccess());
         assertNotNull(actual.getOrders());
         assertNotNull(actual.getOrders().get(0));

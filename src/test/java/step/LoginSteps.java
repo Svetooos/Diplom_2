@@ -16,6 +16,7 @@ public class LoginSteps {
     public String login_success(LoginRequest loginRequest) {
         BaseResponse expected = new BaseResponse(true);
         LoginResponse actual = loginApi.login(loginRequest);
+        assertEquals(200, actual.getCode());
         assertEquals(expected.getSuccess(), actual.getSuccess());
         assertNotNull(actual.getAccessToken());
         assertNotNull(actual.getRefreshToken());
@@ -27,6 +28,7 @@ public class LoginSteps {
     public void login_unsuccessful(LoginRequest loginRequest) {
         BaseResponse expected = new BaseResponse(false, "email or password are incorrect");
         LoginResponse actual = loginApi.login(loginRequest);
+        assertEquals(401, actual.getCode());
         assertEquals(expected.getSuccess(), actual.getSuccess());
         assertEquals(expected.getMessage(), actual.getMessage());
     }
