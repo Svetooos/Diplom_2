@@ -33,6 +33,14 @@ public class BaseHttpClient {
                 .thenReturn();
     }
 
+    protected Response doGetRequest(String path, String token) {
+        return given()
+                .spec(baseRequestSpec())
+                .header("Authorization", token)
+                .get(path)
+                .thenReturn();
+    }
+
     protected Response doPostRequest(String path, Object body) {
         return given()
                 .spec(baseRequestSpec())

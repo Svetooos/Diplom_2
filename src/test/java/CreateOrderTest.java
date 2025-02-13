@@ -2,6 +2,7 @@ import data.ingridient.GetIngredientsResponse;
 import data.login.LoginRequest;
 import data.order.CreateOrderRequest;
 import data.user.CreateUserRequest;
+import io.qameta.allure.junit4.DisplayName;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import step.LoginSteps;
@@ -17,6 +18,7 @@ public class CreateOrderTest {
     private UserSteps userSteps = new UserSteps();
 
     @Test
+    @DisplayName("Создание заказа без авторизации")
     public void createOrder_unauthorized() {
         GetIngredientsResponse ingredients = orderSteps.getIngredients_success();
 
@@ -26,6 +28,7 @@ public class CreateOrderTest {
     }
 
     @Test
+    @DisplayName("Создание заказа с ингредиент")
     public void createOrder_withIngredients() {
         GetIngredientsResponse ingredients = orderSteps.getIngredients_success();
 
@@ -34,10 +37,11 @@ public class CreateOrderTest {
                 ingredients.getData().get(0).get_id(),
                 ingredients.getData().get(1).get_id(),
                 ingredients.getData().get(2).get_id()));
-        orderSteps.createOrder_withoutIngredients(createOrderRequest);
+        orderSteps.createOrder_withIngredients(createOrderRequest);
     }
 
     @Test
+    @DisplayName("Создание заказа с неправильным ингредиентом")
     public void createOrder_incorrectIngredient() {
         CreateOrderRequest createOrderRequest = new CreateOrderRequest();
         createOrderRequest.setIngredients(Arrays.asList("61c0c5a71d1f82001bd0006d"));
@@ -45,6 +49,7 @@ public class CreateOrderTest {
     }
 
     @Test
+    @DisplayName("Создание заказа без ингредиентов")
     public void createOrder_withoutIngredients() {
         CreateOrderRequest createOrderRequest = new CreateOrderRequest();
         createOrderRequest.setIngredients(null);
@@ -52,6 +57,7 @@ public class CreateOrderTest {
     }
 
     @Test
+    @DisplayName("Создание заказа с авторизацией")
     public void createOrder_authorized() {
         CreateUserRequest createUserRequest = new CreateUserRequest(
                 RandomStringUtils.randomAlphabetic(10) + "@yandex.ru",

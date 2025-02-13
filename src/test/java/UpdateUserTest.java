@@ -1,6 +1,7 @@
 import data.login.LoginRequest;
 import data.user.CreateUserRequest;
 import data.user.UpdateUserRequest;
+import io.qameta.allure.junit4.DisplayName;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import step.UserSteps;
 public class UpdateUserTest {
     private UserSteps userSteps = new UserSteps();
     private LoginSteps loginSteps = new LoginSteps();
+
     private CreateUserRequest createUserRequest = new CreateUserRequest(
             RandomStringUtils.randomAlphabetic(10) + "@yandex.ru",
             RandomStringUtils.randomAlphabetic(8),
@@ -21,6 +23,7 @@ public class UpdateUserTest {
     }
 
     @Test
+    @DisplayName("Обновление пользователя без авторизации")
     public void updateUser_unauthorized() {
         UpdateUserRequest updateUserRequest = new UpdateUserRequest();
         updateUserRequest.setEmail(createUserRequest.getEmail() + "abc");
@@ -31,6 +34,7 @@ public class UpdateUserTest {
 
 
     @Test
+    @DisplayName("Обновление пользователя с авторизацией")
     public void updateUser_authorized() {
         String email = createUserRequest.getEmail();
         String password = createUserRequest.getPassword();

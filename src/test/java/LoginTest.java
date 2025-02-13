@@ -1,5 +1,6 @@
 import data.login.LoginRequest;
 import data.user.CreateUserRequest;
+import io.qameta.allure.junit4.DisplayName;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Успешная авторизация")
     public void login_success() {
         LoginRequest loginRequest = new LoginRequest(
                 createUserRequest.getEmail(),
@@ -30,6 +32,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Неуспешная авторизация")
     public void login_unsuccess() {
         LoginRequest loginRequest = new LoginRequest(
                 createUserRequest.getEmail(),
