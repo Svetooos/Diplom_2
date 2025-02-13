@@ -41,6 +41,15 @@ public class BaseHttpClient {
                 .thenReturn();
     }
 
+    protected Response doPostRequest(String path, Object body, String token) {
+        return given()
+                .spec(baseRequestSpec())
+                .header("Authorization", token)
+                .body(body)
+                .post(path)
+                .thenReturn();
+    }
+
     protected Response doPutRequest(String path, Map<String, Integer> params) {
         return given()
                 .spec(baseRequestSpec())

@@ -4,13 +4,10 @@ import data.user.UpdateUserRequest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import step.LoginSteps;
 import step.UserSteps;
 
 public class UpdateUserTest {
-    private static final Logger log = LoggerFactory.getLogger(UpdateUserTest.class);
     private UserSteps userSteps = new UserSteps();
     private LoginSteps loginSteps = new LoginSteps();
     private CreateUserRequest createUserRequest = new CreateUserRequest(
@@ -26,8 +23,8 @@ public class UpdateUserTest {
     @Test
     public void updateUser_unauthorized() {
         UpdateUserRequest updateUserRequest = new UpdateUserRequest();
-        updateUserRequest.setEmail(createUserRequest.getEmail());
-        updateUserRequest.setPassword(createUserRequest.getPassword());
+        updateUserRequest.setEmail(createUserRequest.getEmail() + "abc");
+        updateUserRequest.setPassword(createUserRequest.getPassword() + "abc");
         updateUserRequest.setName(createUserRequest.getName() + "abc");
         userSteps.updateUser_unauthorized(updateUserRequest);
     }
@@ -37,11 +34,13 @@ public class UpdateUserTest {
     public void updateUser_authorized() {
         String email = createUserRequest.getEmail();
         String password = createUserRequest.getPassword();
-        String name = createUserRequest.getName();
 
         String token = loginSteps.login_success(new LoginRequest(email, password));
-        UpdateUserRequest updateUserRequest = new UpdateUserRequest(email, password, name);
 
+        UpdateUserRequest updateUserRequest = new UpdateUserRequest();
+        updateUserRequest.setEmail(email);
+        updateUserRequest.setPassword(password);
+        updateUserRequest.setName(createUserRequest.getName() + "abc");
         userSteps.updateUser_authorized(updateUserRequest, token);
     }
 }

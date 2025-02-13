@@ -1,24 +1,18 @@
 package api;
 
-import data.BaseResponse;
+import data.order.CreateOrderRequest;
+import data.order.CreateOrderResponse;
 
 public class OrderApi extends BaseHttpClient {
     static final String CREATE_ORDER_PATH = "/api/orders";
     static final String GET_ORDER_PATH = "/api/orders/all";
 
-    public BaseResponse createOrderWithoutAuthorization(String requestBody) {
-        return doPostRequest(CREATE_ORDER_PATH, requestBody);
+    public CreateOrderResponse create(CreateOrderRequest createOrderRequest) {
+        return doPostRequest(CREATE_ORDER_PATH, createOrderRequest).as(CreateOrderResponse.class);
     }
 
-    public BaseResponse createOrderAuthorization(String userToken, String requestBody) {
-        return doPostRequest(CREATE_ORDER_PATH, userToken, requestBody);
+    public CreateOrderResponse create(CreateOrderRequest createOrderRequest, String token) {
+        return doPostRequest(CREATE_ORDER_PATH, createOrderRequest, token).as(CreateOrderResponse.class);
     }
 
-    public BaseResponse takeAllOrdersWithoutAuthorization() {
-        return doGetRequest(GET_ORDER_PATH);
-    }
-
-    public BaseResponse takeOrdersAuthorization(String userToken) {
-        return doGetRequest(CREATE_ORDER_PATH, userToken);
-    }
 }

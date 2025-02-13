@@ -1,23 +1,15 @@
 package data.login;
 
-public class LoginResponse {
-    private Boolean success;
+import data.BaseResponse;
+
+public class LoginResponse extends BaseResponse {
     private String accessToken;
     private String refreshToken;
     private User user;
-    private String message;
 
     public static class User {
         public String email;
         public String name;
-    }
-
-    public Boolean getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(Boolean success) {
-        this.success = success;
     }
 
     public String getAccessToken() {
@@ -44,11 +36,4 @@ public class LoginResponse {
         this.user = user;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }
