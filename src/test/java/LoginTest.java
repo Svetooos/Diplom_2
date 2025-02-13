@@ -13,7 +13,7 @@ public class LoginTest {
     private UserSteps userSteps = new UserSteps();
 
     private CreateUserRequest createUserRequest = new CreateUserRequest(
-            RandomStringUtils.randomAlphabetic(10) + "@yandex.ru",
+            (RandomStringUtils.randomAlphabetic(10) + "@yandex.ru").toLowerCase(),
             RandomStringUtils.randomAlphabetic(8),
             RandomStringUtils.randomAlphabetic(8));
     private String token;

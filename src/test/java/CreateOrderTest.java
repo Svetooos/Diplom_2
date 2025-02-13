@@ -69,7 +69,7 @@ public class CreateOrderTest {
     @DisplayName("Создание заказа с авторизацией")
     public void createOrder_authorized() {
         CreateUserRequest createUserRequest = new CreateUserRequest(
-                RandomStringUtils.randomAlphabetic(10) + "@yandex.ru".toLowerCase(),
+                (RandomStringUtils.randomAlphabetic(10) + "@yandex.ru").toLowerCase(),
                 RandomStringUtils.randomAlphabetic(8),
                 RandomStringUtils.randomAlphabetic(8));
         userSteps.createUser_success(createUserRequest);
