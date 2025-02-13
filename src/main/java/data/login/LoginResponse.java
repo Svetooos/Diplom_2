@@ -8,8 +8,8 @@ public class LoginResponse extends BaseResponse {
     private User user;
 
     public static class User {
-        public String email;
-        public String name;
+        private String email;
+        private String name;
     }
 
     public String getAccessToken() {

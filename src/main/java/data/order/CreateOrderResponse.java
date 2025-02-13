@@ -4,11 +4,11 @@ package data.order;
 import data.BaseResponse;
 
 public class CreateOrderResponse extends BaseResponse {
-    public String name;
-    public Order order;
+    private String name;
+    private Order order;
 
     public static class Order {
-        public Integer number;
+        private Integer number;
 
         public Integer getNumber() {
             return number;

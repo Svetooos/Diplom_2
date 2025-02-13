@@ -7,9 +7,9 @@ import java.util.Date;
 
 public class GetOrderResponse extends BaseResponse {
 
-    public ArrayList<Order> orders;
-    public Integer total;
-    public Integer totalToday;
+    private ArrayList<Order> orders;
+    private Integer total;
+    private Integer totalToday;
 
     public ArrayList<Order> getOrders() {
         return orders;
@@ -36,12 +36,12 @@ public class GetOrderResponse extends BaseResponse {
     }
 
     public static class Order {
-        public ArrayList<String> ingredients;
-        public String _id;
-        public String status;
-        public Integer number;
-        public Date createdAt;
-        public Date updatedAt;
+        private ArrayList<String> ingredients;
+        private String _id;
+        private String status;
+        private Integer number;
+        private Date createdAt;
+        private Date updatedAt;
 
         public ArrayList<String> getIngredients() {
             return ingredients;

@@ -2,6 +2,7 @@ import data.login.LoginRequest;
 import data.user.CreateUserRequest;
 import io.qameta.allure.junit4.DisplayName;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import step.LoginSteps;
@@ -15,11 +16,19 @@ public class LoginTest {
             RandomStringUtils.randomAlphabetic(10) + "@yandex.ru",
             RandomStringUtils.randomAlphabetic(8),
             RandomStringUtils.randomAlphabetic(8));
+    private String token;
 
 
     @Before
     public void init() {
-        userSteps.createUser_success(createUserRequest);
+        token = userSteps.createUser_success(createUserRequest);
+    }
+
+    @After
+    public void cleanUp() {
+        if (token != null && !token.isEmpty()) {
+            userSteps.deleteUser(token);
+        }
     }
 
     @Test

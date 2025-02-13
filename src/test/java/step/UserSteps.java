@@ -4,28 +4,40 @@ import api.UserApi;
 import data.BaseResponse;
 import data.user.CreateUserRequest;
 import data.user.UpdateUserRequest;
+import data.user.UserResponse;
 import io.qameta.allure.Step;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class UserSteps {
 
     private final UserApi userApi = new UserApi();
 
     @Step
-    public void createUser_success(CreateUserRequest createUserRequest) {
-        BaseResponse expected = new BaseResponse(true);
-        BaseResponse actual = userApi.create(createUserRequest);
-        assertEquals(expected.getSuccess(), actual.getSuccess());
+    public void deleteUser(String token) {
+        userApi.delete(token);
     }
 
     @Step
-    public void createUser_duplicate(CreateUserRequest createUserRequest) {
+    public String createUser_success(CreateUserRequest createUserRequest) {
+        UserResponse actual = userApi.create(createUserRequest);
+        assertEquals(true, actual.getSuccess());
+        assertNotNull(actual.getUser());
+        assertEquals(createUserRequest.getName(), actual.getUser().getName());
+        assertEquals(createUserRequest.getEmail(), actual.getUser().getEmail());
+        assertNotNull(actual.getAccessToken());
+        return actual.getAccessToken();
+    }
+
+    @Step
+    public String createUser_duplicate(CreateUserRequest createUserRequest) {
         BaseResponse expected = new BaseResponse(false, "User already exists");
-        userApi.create(createUserRequest);
+        String token = userApi.create(createUserRequest).getAccessToken();
         BaseResponse actual = userApi.create(createUserRequest);
         assertEquals(expected.getSuccess(), actual.getSuccess());
         assertEquals(expected.getMessage(), actual.getMessage());
+        return token;
     }
 
     @Step
@@ -47,8 +59,10 @@ public class UserSteps {
 
     @Step
     public void updateUser_authorized(UpdateUserRequest updateUserRequest, String token) {
-        BaseResponse expected = new BaseResponse(true);
-        BaseResponse actual = userApi.update(updateUserRequest, token);
-        assertEquals(expected.getSuccess(), actual.getSuccess());
+        UserResponse actual = userApi.update(updateUserRequest, token);
+        assertEquals(true, actual.getSuccess());
+        assertNotNull(actual.getUser());
+        assertEquals(updateUserRequest.getEmail(), actual.getUser().getEmail());
+        assertEquals(updateUserRequest.getName(), actual.getUser().getName());
     }
 }

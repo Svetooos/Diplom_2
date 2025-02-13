@@ -4,6 +4,7 @@ import data.order.CreateOrderRequest;
 import data.user.CreateUserRequest;
 import io.qameta.allure.junit4.DisplayName;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.After;
 import org.junit.Test;
 import step.LoginSteps;
 import step.OrderSteps;
@@ -15,6 +16,14 @@ public class GetOrderTest {
     private OrderSteps orderSteps = new OrderSteps();
     private UserSteps userSteps = new UserSteps();
     private LoginSteps loginSteps = new LoginSteps();
+    private String token;
+
+    @After
+    public void cleanUp() {
+        if (token != null && !token.isEmpty()) {
+            userSteps.deleteUser(token);
+        }
+    }
 
     @Test
     @DisplayName("Получение заказов без авторизации")
@@ -26,12 +35,12 @@ public class GetOrderTest {
     @DisplayName("Получение заказов c авторизацией")
     public void getOrder_authorized() {
         CreateUserRequest createUserRequest = new CreateUserRequest(
-                RandomStringUtils.randomAlphabetic(10) + "@yandex.ru",
+                (RandomStringUtils.randomAlphabetic(10) + "@yandex.ru").toLowerCase(),
                 RandomStringUtils.randomAlphabetic(8),
                 RandomStringUtils.randomAlphabetic(8));
         userSteps.createUser_success(createUserRequest);
 
-        String token = loginSteps.login_success(new LoginRequest
+        token = loginSteps.login_success(new LoginRequest
                 (createUserRequest.getEmail(), createUserRequest.getPassword()));
 
         GetIngredientsResponse ingredients = orderSteps.getIngredients_success();

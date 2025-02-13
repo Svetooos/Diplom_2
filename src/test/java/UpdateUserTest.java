@@ -3,6 +3,7 @@ import data.user.CreateUserRequest;
 import data.user.UpdateUserRequest;
 import io.qameta.allure.junit4.DisplayName;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import step.LoginSteps;
@@ -13,13 +14,22 @@ public class UpdateUserTest {
     private LoginSteps loginSteps = new LoginSteps();
 
     private CreateUserRequest createUserRequest = new CreateUserRequest(
-            RandomStringUtils.randomAlphabetic(10) + "@yandex.ru",
+            (RandomStringUtils.randomAlphabetic(10) + "@yandex.ru").toLowerCase(),
             RandomStringUtils.randomAlphabetic(8),
             RandomStringUtils.randomAlphabetic(8));
+
+    private String token;
 
     @Before
     public void init() {
         userSteps.createUser_success(createUserRequest);
+    }
+
+    @After
+    public void cleanUp() {
+        if (token != null && !token.isEmpty()) {
+            userSteps.deleteUser(token);
+        }
     }
 
     @Test
@@ -27,7 +37,6 @@ public class UpdateUserTest {
     public void updateUser_unauthorized() {
         UpdateUserRequest updateUserRequest = new UpdateUserRequest();
         updateUserRequest.setEmail(createUserRequest.getEmail() + "abc");
-        updateUserRequest.setPassword(createUserRequest.getPassword() + "abc");
         updateUserRequest.setName(createUserRequest.getName() + "abc");
         userSteps.updateUser_unauthorized(updateUserRequest);
     }
@@ -39,11 +48,10 @@ public class UpdateUserTest {
         String email = createUserRequest.getEmail();
         String password = createUserRequest.getPassword();
 
-        String token = loginSteps.login_success(new LoginRequest(email, password));
+        token = loginSteps.login_success(new LoginRequest(email, password));
 
         UpdateUserRequest updateUserRequest = new UpdateUserRequest();
-        updateUserRequest.setEmail(email);
-        updateUserRequest.setPassword(password);
+        updateUserRequest.setEmail(email + "abc");
         updateUserRequest.setName(createUserRequest.getName() + "abc");
         userSteps.updateUser_authorized(updateUserRequest, token);
     }
